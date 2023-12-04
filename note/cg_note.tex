@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+\usepackage[margin=3cm]{geometry}
+\usepackage{amsmath,amssymb}
+\linespread{1.8}
+\title{Computer Graphics Note}
+\author{Yichen, Di}
+\begin{document}
+\maketitle
+\section{Working with light}\noindent
+Energe adds according to $E(\lambda)=E_1(\lambda)+E_2(\lambda)$\\
+YUV color space: luminance, U and V, can be obtained by $\begin{bmatrix}
+    Y\\ U\\ V
+\end{bmatrix}=P\begin{bmatrix}
+    R\\ G\\ B
+\end{bmatrix}$\\
+We perceive brightness intensity differences better at lower (as opposed to higher) light
+intensities, so logarithmic compression is often used.
+\section{Virtual world}\noindent
+Rotation matrix: $R_X(\theta)=\begin{bmatrix}
+    1 & 0 & 0\\
+    0 & \cos\theta & -\sin\theta\\
+    0 & \sin\theta & \cos\theta
+\end{bmatrix}$，$R_Y(\theta)=\begin{bmatrix}
+    \cos\theta & 0 & \sin\theta\\
+    0 & 1 & 0\\
+    -\sin\theta & 0 & \cos\theta
+\end{bmatrix}$,$R_Z(\theta)=\begin{bmatrix}
+    \cos\theta & -\sin\theta & 0\\
+    \sin\theta & \cos\theta & 0\\
+    0 & 0 & 1
+\end{bmatrix}$\\
+In rotation, line segments, angles and shapes are preserved.\\
+Scaling matrix: $S=\begin{bmatrix}
+    s_1 & 0 & 0\\
+    0 & s_2 & 0\\
+    0 & 0 & s_3
+\end{bmatrix}$\\
+homogenous coordinates: point $\vec{x}=\begin{bmatrix}
+    x_1\\ x_2\\ x_3
+\end{bmatrix}\rightarrow\begin{bmatrix}
+    x_1\\ x_2\\ x_3\\ 1
+\end{bmatrix}=\vec{x_H}$, vector $\vec{u}=\begin{bmatrix}
+    u_1\\ u_2\\ u_3
+\end{bmatrix}\rightarrow\begin{bmatrix}
+    u_1\\ u_2\\ u_3\\ 0
+\end{bmatrix}=\vec{u_H}$\\
+rotation $R'=\begin{bmatrix}
+    {} & {} & {} & 0\\
+    {} & R & {} & 0\\
+    {} & {} & {} & 0\\
+    0 & 0 & 0 & 1\\
+\end{bmatrix}$，translation $T'=\begin{bmatrix}
+    {} & {} & {} & t_1\\
+    {} & I & {} & t_2\\
+    {} & {} & {} & t_3\\
+    0 & 0 & 0 & t_4\\
+\end{bmatrix}$, $T'\begin{bmatrix}
+    \vec{x} \\ 1
+\end{bmatrix}=\begin{bmatrix}
+    \vec{x}+\vec{t} \\ 1
+\end{bmatrix}$\\
+Screen space projection: $x'\dfrac{hx}{z}$, $y'=\dfrac{hy}{z}$. Because $\dfrac{1}{z}$ is nonlinear,
+we write the result as $\begin{bmatrix}
+    x'w\\ y'w\\ z'w\\ w
+\end{bmatrix}=\begin{bmatrix}
+    h & 0 & 0 & 0\\
+    0 & h & 0 & 0\\
+    0 & 0 & a & b\\
+    0 & 0 & 1 & 0
+\end{bmatrix}\begin{bmatrix}
+    x\\ y\\ z\\ 1
+\end{bmatrix}$\\
+$z'=n+f-\dfrac{nf}{z}$ can be used to compute occlusion/transparency.
+\section{Triangles}\noindent
+Rasterization: the process of transforming the vertices to screen space.\\
+$\vec{n}$ is the outward normal of the edge and $p_0$ one of the endpoints of the edge, 
+then $(\vec{p}-\vec{p_0})\cdot\vec{n}$ with $p$,$p_0$ on the same plane means that $p$ is on the interior side of the edge.\\
+If on the interior sides of all three edges, then $p$ is inside the 2D triangle.\\
+Color each pixel using the triangle that has the smallest z' value.\\
+For $p$ inside triangle, $p=\alpha_0p_0+\alpha_1p_1+\alpha_2p_2=\vec{p_2}+\beta_0(p_0-p_2)+\beta_1(p_1-p_2)
+=p_2+\beta_0u+\beta_1v=p_2+\alpha_0u+\alpha_1v$\\
+After perspective projection: $p'=\alpha'_0p'_0+\alpha'_1p'_1+\alpha'_2p'_2$, $\begin{bmatrix}
+    \alpha'_0\\ \alpha'_1
+\end{bmatrix}=\begin{bmatrix}
+    \dfrac{z_0}{z_p}\alpha_0\\ \dfrac{z_1}{z_p}\alpha_1
+\end{bmatrix}$, $\dfrac{1}{z}=\alpha'_0\dfrac{1}{z_0}+\alpha'_1\dfrac{1}{z_1}+\alpha'_2\dfrac{1}{z_2}$
+\section{Ray tracing}\noindent
+
+\end{document}
